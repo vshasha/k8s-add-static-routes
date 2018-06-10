@@ -19,7 +19,7 @@ spec:
           command: [ "/bin/bash", "-c" ]
           args:
           - >
-              _gateway=`ip route get 10.0.0.0/8 | sed 's/.*via \(.*\) dev.*/\1/'`;
+              _gateway=`ip route get 169.0.0.0/8 | sed 's/.*via \(.*\) dev.*/\1/'`;
               touch routes_${_lastVersion}.txt;
               while true;
               do
@@ -39,7 +39,7 @@ spec:
                 for _route in `comm -1 routes_${_lastVersion}.txt routes_${_currVersion}.txt | awk '{print $1;}'`; do
                   [ -z "`ip route show | grep ${_route} | grep ${_gateway}`" ] || continue;
                   echo "Adding ${_route} via ${_gateway} ...";
-                  route add -net ${_route} netmask 255.255.255.192 gw ${_gateway};
+                  ip route add ${_route} via ${_gateway};
                 done;
 
                 rm -f routes_${_lastVersion}.txt;
