@@ -19,7 +19,7 @@ spec:
           command: [ "/bin/bash", "-c" ]
           args:
           - >
-              _gateway=`ip route get 169.0.0.0/8 | sed 's/.*via \(.*\) dev.*/\1/'`;
+              _gateway=`ip route get 10.0.0.0/8 | sed 's/.*via \(.*\) dev.*/\1/'`;
               touch routes_${_lastVersion}.txt;
               while true;
               do
